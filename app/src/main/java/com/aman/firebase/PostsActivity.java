@@ -29,32 +29,38 @@ public class PostsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_posts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setUpVariables();
+
+        //Firebase context has to be set before any firebase reference is made
         Firebase.setAndroidContext(this);
         mRoot = new Firebase(FIREBASE_URL);
         mPosts = mRoot.child("posts");
 
-
-        rvPosts.setHasFixedSize(true);
-        rvPosts.setLayoutManager(new LinearLayoutManager(this));
+        rvPosts.setHasFixedSize(true); //for performance improvement
+        rvPosts.setLayoutManager(new LinearLayoutManager(this));    //for vertical list
 
 
 
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Creating a post and uploading to firebase
                 Post post = new Post("Some Title", etPostContent.getText().toString(), "Random User", "01-04-2016", 0);
                 mPosts.push().setValue(post);
             }
         });
 
+        //using built-in firebase adapter from firebase ui to automatically handle firebase stuff
+
         postAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class,R.layout.view_posts,PostViewHolder.class,mPosts) {
             @Override
             protected void populateViewHolder(PostViewHolder postViewHolder, Post post, int i) {
                 Log.w("FIREBASE_ADAPTER","called");
+                //populating views in card view
                 postViewHolder.tvTitle.setText(post.getTitle());
                 postViewHolder.tvContent.setText(post.getContent());
                 postViewHolder.tvUpvotes.setText(String.valueOf(post.getUpvotes()));
@@ -73,13 +79,14 @@ public class PostsActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Initializing variables
     private void setUpVariables() {
         rvPosts = (RecyclerView)findViewById(R.id.rvPosts);
         etPostContent = (EditText)findViewById(R.id.etPostContent);
         bAddPost = (Button)findViewById(R.id.bAddPost);
     }
 
+    //Custom view holder
     public static class PostViewHolder extends RecyclerView.ViewHolder{
         TextView tvTitle,tvContent,tvPostedBy,tvUpvotes;
         public PostViewHolder(View itemView) {
