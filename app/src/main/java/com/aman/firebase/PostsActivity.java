@@ -13,9 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
@@ -26,6 +28,7 @@ public class PostsActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<Post,PostViewHolder> postAdapter;
     EditText etPostContent;
     Button bAddPost;
+    AuthData authData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +47,13 @@ public class PostsActivity extends AppCompatActivity {
         rvPosts.setLayoutManager(new LinearLayoutManager(this));    //for vertical list
 
 
+        authData = mRoot.getAuth();
 
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Creating a post and uploading to firebase
-                Post post = new Post("Some Title", etPostContent.getText().toString(), "Random User", "01-04-2016", 0);
+                Post post = new Post("Some Title", etPostContent.getText().toString(), authData.getUid(), "01-04-2016", 0);
                 mPosts.push().setValue(post);
             }
         });
@@ -58,13 +62,29 @@ public class PostsActivity extends AppCompatActivity {
 
         postAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class,R.layout.view_posts,PostViewHolder.class,mPosts) {
             @Override
-            protected void populateViewHolder(PostViewHolder postViewHolder, Post post, int i) {
-                Log.w("FIREBASE_ADAPTER","called");
+            protected void populateViewHolder(final PostViewHolder postViewHolder, final Post post, int i) {
+                Log.w("FIREBASE_ADAPTER", "called");
                 //populating views in card view
                 postViewHolder.tvTitle.setText(post.getTitle());
                 postViewHolder.tvContent.setText(post.getContent());
                 postViewHolder.tvUpvotes.setText(String.valueOf(post.getUpvotes()));
-                postViewHolder.tvPostedBy.setText(post.getPostedBy());
+
+                //Query name of user who has posted
+
+                Query queryName = mRoot.child("users/"+post.getPostedBy()+"/fname");
+                queryName.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot != null)
+                            postViewHolder.tvPostedBy.setText(dataSnapshot.getValue(String.class));
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
 
             }
         };
