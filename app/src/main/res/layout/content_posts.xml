@@ -19,22 +19,4 @@
         android:layout_weight="2"
         android:id="@+id/rvPosts">
     </android.support.v7.widget.RecyclerView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="9"
-        android:weightSum="10">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:id="@+id/etPostContent"
-            android:hint="Type post here.."/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/bAddPost"
-            android:layout_weight="7"
-            android:text="Post"/>
-    </LinearLayout>
 </LinearLayout>

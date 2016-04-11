@@ -26,10 +26,9 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".PostsActivity"
+        <activity android:name=".PostsActivity"
             android:label="@string/title_activity_posts"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
