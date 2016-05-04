@@ -95,6 +95,41 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="defaultText">Select Category</string>
     <string name="title_activity_posts">PostsActivity</string>
+    <string name="title_activity_planner__main">Planner</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_planner__reminder">Reminder</string>
+    <string-array name="country_names">
+
+        <item>3 Think-IN work start</item>
+        <item>3 lets finish the planner section</item>
+        <item>3 Jugaad Junction meeting point.</item>
+        <item>3 Testing\n the app</item>
+        <item>7 Testing\n the app</item>
+        <item>7 Antigua &amp; Barbuda</item>
+        <item>5 Argentina</item>
+        <item>5 Armenia</item>
+        <item>5 Australia</item>
+        <item>3 Austria</item>
+        <item>6 Captain America:Civil War!!!!</item>
+        <item>10 Forum ko khatam kiya jaye</item>
+        <item>11 Bahrain</item>
+        <item>11 Bangladesh #@!@#</item>
+        <item>12 Barbados</item>
+        <item>11 Belarus</item>
+        <item>12 Belgium</item>
+        <item>12 Belize</item>
+        <item>13 Benin</item>
+        <item>13 Bhutan</item>
+        <item>14 App Testing</item>
+        <item>14 Forum and Reminder Section</item>
+        <item>20 Botswana</item>
+        <item>20 Brazil</item>
+        <item>20 Brunei</item>
+        <item>20 Bulgaria</item>
+
+
+    </string-array>
 
 </resources>

@@ -4,6 +4,7 @@ package com.aman.firebase;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+
+import java.util.Map;
 
 import shem.com.materiallogin.MaterialLoginView;
 import shem.com.materiallogin.MaterialLoginViewListener;
@@ -33,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRegister(TextInputLayout registerUser, TextInputLayout registerPass, TextInputLayout registerPassRep) {
                 //Handle register
-                mRootRef.createUser(registerUser.getEditText().getText().toString(), registerPass.getEditText().getText().toString(), new Firebase.ResultHandler() {
+                final CharSequence userID=registerUser.getEditText().getText().toString();
+                mRootRef.createUser(registerUser.getEditText().getText().toString(), registerPass.getEditText().getText().toString(),
+                        new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(MainActivity.this, "Registered", Toast.LENGTH_SHORT).show();

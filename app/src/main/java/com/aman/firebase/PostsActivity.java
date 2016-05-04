@@ -1,5 +1,6 @@
 package com.aman.firebase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.aman.firebase.planner.Planner_MainActivity;
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -21,11 +24,12 @@ import com.firebase.ui.FirebaseRecyclerAdapter;
 
 public class PostsActivity extends AppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
-    Firebase mRoot,mPosts;
+    Firebase mRoot,mPosts,mUsers;
     RecyclerView rvPosts;
     FirebaseRecyclerAdapter<Post,PostViewHolder> postAdapter;
     EditText etPostContent;
     Button bAddPost;
+    String uname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +48,11 @@ public class PostsActivity extends AppCompatActivity {
         rvPosts.setLayoutManager(new LinearLayoutManager(this));    //for vertical list
 
 
-
         bAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Creating a post and uploading to firebase
-                Post post = new Post("Some Title", etPostContent.getText().toString(), "Random User", "01-04-2016", 0);
+                Post post = new Post("Some Title", etPostContent.getText().toString(), "REandom User", "01-04-2016", 0);
                 mPosts.push().setValue(post);
             }
         });
@@ -74,8 +77,9 @@ public class PostsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Planner Activity", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                startActivity(new Intent(PostsActivity.this, Planner_MainActivity.class));
             }
         });
     }
