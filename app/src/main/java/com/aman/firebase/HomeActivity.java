@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aman.firebase.planner.Planner_MainActivity;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -40,20 +41,17 @@ public class HomeActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(HomeActivity.this,Planner_MainActivity.class));
             }
         });
         Firebase.setAndroidContext(this);
         final Firebase mRootRef = new Firebase("https://think-in.firebaseio.com/");
         final AuthData authData = mRootRef.getAuth();
         if(authData == null){
-            Toast.makeText(HomeActivity.this, "User not authenticated", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(HomeActivity.this, "User not authenticated", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(HomeActivity.this, "User authenticated ;)", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(HomeActivity.this, "User authenticated ;)", Toast.LENGTH_SHORT).show();
         }
         bProfileSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +62,10 @@ public class HomeActivity extends AppCompatActivity{
                 String branch = etBranch.getText().toString();
                 String section = etSection.getText().toString();
                 String year = etYear.getText().toString();
+
+                Intent i=new Intent(HomeActivity.this,PostsActivity.class);
+                i.putExtra("User",etFName.getText().toString());
+
 
                 Map<String,Object> profileDetails = new HashMap<String, Object>();
 
