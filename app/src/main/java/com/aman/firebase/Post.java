@@ -15,15 +15,17 @@ public class Post {
     private String postedBy;
     private String postDate;
     private int upvotes;
+    public String noOfPosts;
 
     public Post(){}
 
-    public Post(String title,String content,String postedBy,String postDate,int upvotes){
+    public Post(String title,String content,String postedBy,String postDate,int upvotes,String noOfPosts){
         this.title = title;
         this.content = content;
         this.postDate = postDate;
         this.upvotes = upvotes;
         this.postedBy = postedBy;
+        this.noOfPosts=noOfPosts;
     }
 
 
@@ -45,6 +47,9 @@ public class Post {
     public String getPostedBy() {
         return postedBy;
     }
+    public String getNoOfPosts() {
+        return noOfPosts;
+    }
 
 
     public String getPostDate() {
@@ -54,7 +59,7 @@ public class Post {
     @Override
     public String toString() {
         String json = "posts{tile='"+title+"', content='"+content+"', " +
-                "postedBy='"+postedBy+"', postDate='"+postDate+"', upvotes="+upvotes+"}";
+                "postedBy='"+postedBy+"', postDate='"+postDate+"', upvotes="+upvotes+", noOfPosts='"+noOfPosts+"'}";
         Log.w("JSON",json);
         return json;
     }
