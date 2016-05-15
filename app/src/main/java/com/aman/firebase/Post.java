@@ -13,19 +13,17 @@ public class Post {
 
     private String title;
     private String postedBy;
-    private String postDate;
+    private long timeStamp;
     private int upvotes;
-    public String noOfPosts;
 
     public Post(){}
 
-    public Post(String title,String content,String postedBy,String postDate,int upvotes,String noOfPosts){
+    public Post(String title,String content,String postedBy,long timeStamp,int upvotes){
         this.title = title;
         this.content = content;
-        this.postDate = postDate;
+        this.timeStamp = timeStamp;
         this.upvotes = upvotes;
         this.postedBy = postedBy;
-        this.noOfPosts=noOfPosts;
     }
 
 
@@ -47,20 +45,9 @@ public class Post {
     public String getPostedBy() {
         return postedBy;
     }
-    public String getNoOfPosts() {
-        return noOfPosts;
-    }
 
 
-    public String getPostDate() {
-        return postDate;
-    }
-
-    @Override
-    public String toString() {
-        String json = "posts{tile='"+title+"', content='"+content+"', " +
-                "postedBy='"+postedBy+"', postDate='"+postDate+"', upvotes="+upvotes+", noOfPosts='"+noOfPosts+"'}";
-        Log.w("JSON",json);
-        return json;
+    public long getTimeStamp() {
+        return timeStamp;
     }
 }

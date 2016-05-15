@@ -21,6 +21,7 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
+import java.util.Date;
 import java.util.Map;
 
 public class PostsActivity extends AppCompatActivity {
@@ -57,35 +58,10 @@ public class PostsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Creating a post and uploading to firebase
-                Post post = new Post("Some Title", etPostContent.getText().toString(), authData.getUid(), "01-04-2016", 0,"3"  );
+                Date timeStamp = new Date();
+                long timeStampMills = timeStamp.getTime();
+                Post post = new Post("Some Title", etPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
                 mPosts.push().setValue(post);
-                Query queryNo = mRoot.child("users/"+post.getPostedBy()+"/noOfPosts");
-                Log.w("E_QUERY",queryNo.toString());//
-                queryNo.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        if (dataSnapshot != null) {
-                            try {
-                                value = Integer.parseInt(dataSnapshot.getValue(String.class))+1;
-                                Log.w("E_VALUE",String.valueOf(value));
-                            }
-                            catch(Exception e)
-                            {
-                                Log.v("excep", String.valueOf(e));
-                            }
-
-                           // mRoot.setValue(Integer.toString(value));
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-
-                    }
-                });
 
             }
         });
@@ -93,7 +69,7 @@ public class PostsActivity extends AppCompatActivity {
 
         //using built-in firebase adapter from firebase ui to automatically handle firebase stuff
 
-        postAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class, R.layout.view_posts, PostViewHolder.class, mPosts) {
+        postAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class, R.layout.view_posts, PostViewHolder.class, mPosts.orderByChild("timeStamp")) {
             @Override
             protected void populateViewHolder(final PostViewHolder postViewHolder, final Post post, int i) {
                 Log.w("FIREBASE_ADAPTER", "called");
@@ -104,7 +80,7 @@ public class PostsActivity extends AppCompatActivity {
 
                 //Query name of user who has posted
 
-                Query queryName = mRoot.child("users/" + post.getPostedBy() + "/fname");
+               Query queryName = mRoot.child("users/" + post.getPostedBy() + "/fname");
                 queryName.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
