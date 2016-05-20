@@ -6,5 +6,5 @@
     <color name="material_login_register_error_color">#600002</color>
     <color name="primary">#03A9F4</color>
     <color name="primary_dark">#0288D1</color>
-    <color name="accent">#FFC107</color>
+    <color name="accent">#0288D1</color>
 </resources>

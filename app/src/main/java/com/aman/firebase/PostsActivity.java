@@ -1,16 +1,21 @@
 package com.aman.firebase;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
@@ -21,6 +26,8 @@ import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -29,9 +36,9 @@ public class PostsActivity extends AppCompatActivity {
     Firebase mRoot, mPosts;
     RecyclerView rvPosts;
     FirebaseRecyclerAdapter<Post, PostViewHolder> postAdapter;
-    EditText etPostContent;
-    Button bAddPost;
     AuthData authData;
+    Date timeStamp;
+    FloatingActionButton fabInputPost;
     int value=0;
 
     @Override
@@ -54,19 +61,6 @@ public class PostsActivity extends AppCompatActivity {
 
         authData = mRoot.getAuth();
 
-        bAddPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Creating a post and uploading to firebase
-                Date timeStamp = new Date();
-                long timeStampMills = timeStamp.getTime();
-                Post post = new Post("Some Title", etPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
-                mPosts.push().setValue(post);
-
-            }
-        });
-
-
         //using built-in firebase adapter from firebase ui to automatically handle firebase stuff
 
         postAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class, R.layout.view_posts, PostViewHolder.class, mPosts.orderByChild("timeStamp")) {
@@ -77,6 +71,7 @@ public class PostsActivity extends AppCompatActivity {
                 postViewHolder.tvTitle.setText(post.getTitle());
                 postViewHolder.tvContent.setText(post.getContent());
                 postViewHolder.tvUpvotes.setText(String.valueOf(post.getUpvotes()));
+                postViewHolder.tvPostTime.setText(getDate(post.getTimeStamp()));
 
                 //Query name of user who has posted
 
@@ -96,15 +91,43 @@ public class PostsActivity extends AppCompatActivity {
                 });
 
             }
+
+            private String getDate(long timeStamp) {
+                Date date = new Date(-timeStamp);
+                Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                return format.format(date);
+            }
         };
         rvPosts.setAdapter(postAdapter);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fabInputPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(PostsActivity.this);
+                final AlertDialog alertDialog = dialogBuilder.create();
+                LayoutInflater inflater = PostsActivity.this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.post_input_dialog, null);
+                alertDialog.setView(dialogView);
+                final EditText etInputPostTitle = (EditText)dialogView.findViewById(R.id.etInputPostTitle);
+                final EditText etInputPostContent = (EditText)dialogView.findViewById(R.id.etInputPostContent);
+                Button bPostAddDone = (Button)dialogView.findViewById(R.id.bPostAddDone);
+                Button bPostAddCancel = (Button) dialogView.findViewById(R.id.bPostAddCancel);
+                bPostAddDone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        timeStamp = new Date();
+                        long timeStampMills = timeStamp.getTime();
+                        Post post = new Post(etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
+                        mPosts.push().setValue(post);
+                        alertDialog.dismiss();
+                    }
+                });
+                bPostAddCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
             }
         });
     }
@@ -112,13 +135,12 @@ public class PostsActivity extends AppCompatActivity {
     //Initializing variables
     private void setUpVariables() {
         rvPosts = (RecyclerView) findViewById(R.id.rvPosts);
-        etPostContent = (EditText) findViewById(R.id.etPostContent);
-        bAddPost = (Button) findViewById(R.id.bAddPost);
+        fabInputPost = (FloatingActionButton) findViewById(R.id.fabInputPost);
     }
 
     //Custom view holder
     public static class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvContent, tvPostedBy, tvUpvotes;
+        TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
 
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -126,6 +148,7 @@ public class PostsActivity extends AppCompatActivity {
             tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             tvPostedBy = (TextView) itemView.findViewById(R.id.tvPostedBy);
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
+            tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
         }
     }
 }
