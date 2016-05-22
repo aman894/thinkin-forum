@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity{
     EditText etFName,etLName,etBranch,etSection,etYear;
-    Button bProfileSubmit,bSkipProfile,bGoToPost;
+    Button bProfileSubmit,bSkipProfile,bGoToPost,bGoToComments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +101,13 @@ public class HomeActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        bGoToComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, CommentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setUpViews() {
@@ -112,6 +119,7 @@ public class HomeActivity extends AppCompatActivity{
         bProfileSubmit = (Button)findViewById(R.id.bProfileSubmit);
         bSkipProfile = (Button)findViewById(R.id.bSkipProfile);
         bGoToPost = (Button)findViewById(R.id.bGoToPost);
+        bGoToComments = (Button)findViewById(R.id.bGoToComments);
     }
 
 

@@ -1,7 +1,9 @@
 package com.aman.firebase;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,6 +41,7 @@ public class PostsActivity extends AppCompatActivity {
     AuthData authData;
     Date timeStamp;
     FloatingActionButton fabInputPost;
+    Activity activity;
     int value=0;
 
     @Override
@@ -116,8 +119,11 @@ public class PostsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         timeStamp = new Date();
                         long timeStampMills = timeStamp.getTime();
-                        Post post = new Post(etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
-                        mPosts.push().setValue(post);
+                        Firebase pushToken = mPosts.push();
+                        String postID = pushToken.getKey();
+                        Log.w("PostID::",postID);
+                        Post post = new Post(postID,etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
+                        pushToken.setValue(post);
                         alertDialog.dismiss();
                     }
                 });
@@ -139,16 +145,25 @@ public class PostsActivity extends AppCompatActivity {
     }
 
     //Custom view holder
-    public static class PostViewHolder extends RecyclerView.ViewHolder {
+    public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
 
         public PostViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             tvPostedBy = (TextView) itemView.findViewById(R.id.tvPostedBy);
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
             tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.d("THINKIN", "onClick " + getAdapterPosition());
+            //Intent startCommentActivity = new Intent(PostsActivity.this,CommentActivity.class);
+            //startActivity(startCommentActivity);
         }
     }
 }

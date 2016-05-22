@@ -2,17 +2,17 @@ package com.aman.firebase;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -64,4 +64,5 @@ public class ProfileActivity extends AppCompatActivity {
         tvDisplayFName = (TextView)findViewById(R.id.tvDisplayFName);
         tvDisplayLName = (TextView)findViewById(R.id.tvDisplayLName);
     }
+
 }

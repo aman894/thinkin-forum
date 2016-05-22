@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class Post {
 
+    private String postID;
     private String title;
     private String postedBy;
     private long timeStamp;
@@ -18,7 +19,8 @@ public class Post {
 
     public Post(){}
 
-    public Post(String title,String content,String postedBy,long timeStamp,int upvotes){
+    public Post(String postID,String title,String content,String postedBy,long timeStamp,int upvotes){
+        this.postID = postID;
         this.title = title;
         this.content = content;
         this.timeStamp = timeStamp;
@@ -26,6 +28,9 @@ public class Post {
         this.postedBy = postedBy;
     }
 
+    public String getPostID() {
+        return postID;
+    }
 
     public int getUpvotes() {
         return upvotes;

@@ -98,5 +98,13 @@
         android:layout_below="@+id/bSkipProfile"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Or Comment"
+        android:id="@+id/bGoToComments"
+        android:layout_below="@+id/bGoToPost"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
