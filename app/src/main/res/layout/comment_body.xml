@@ -11,6 +11,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:text="comment user"
+            android:id="@+id/tvCommentUser"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:text="comment content"
             android:id="@+id/tvCommentContent"/>
         <TextView

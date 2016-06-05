@@ -42,7 +42,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".planner.Planner_MainActivity" />
         </activity>
-        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".CommentActivity"
+            android:label="Comments"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

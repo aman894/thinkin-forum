@@ -1,14 +1,42 @@
 package com.aman.firebase;
 
 /**
- * Created by aman on 22/5/16.
+ * Created by aman on 1/6/16.
  */
 public class Comment {
-    String postID,userID,content,timestamp;
-    public Comment(String postID, String userID, String timestamp, String content) {
+
+    private String postID;
+    private String userID;
+    private String commentID;
+    private String commentContent;
+    private long timestamp;
+
+    public Comment(){}
+    public Comment(String postID, String userID, String commentID, long timestamp, String commentContent) {
         this.postID = postID;
         this.userID = userID;
         this.timestamp = timestamp;
-        this.content = content;
+        this.commentContent = commentContent;
+        this.commentID = commentID;
     }
+    public String getPostID() {
+        return postID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public String getCommentID() {
+        return commentID;
+    }
+
 }
