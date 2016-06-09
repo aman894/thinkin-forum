@@ -42,7 +42,8 @@ public class CommentActivity extends AppCompatActivity {
     Date timeStamp;
     FloatingActionButton fabInputComment;
     int value=0;
-    String postID;
+    TextView tvCommentPostTitle,tvCommentPostContent;
+    String postID,postTitle,postContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,11 @@ public class CommentActivity extends AppCompatActivity {
         setUpVariables();
         Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
+        postTitle = intent.getStringExtra("POST_TITLE");
+        postContent = intent.getStringExtra("POST_CONTENT");
+
+        tvCommentPostTitle.setText(postTitle);
+        tvCommentPostContent.setText(postContent);
         Log.w("postID",postID);
         //Firebase context has to be set before any firebase reference is made
         Firebase.setAndroidContext(this);
@@ -62,29 +68,27 @@ public class CommentActivity extends AppCompatActivity {
         rvComments.setHasFixedSize(true); //for performance improvement
         rvComments.setLayoutManager(new LinearLayoutManager(this));    //for vertical list
 
-
         authData = mRoot.getAuth();
 
         //using built-in firebase adapter from firebase ui to automatically handle firebase stuff
-
-        commentAdapter = new FirebaseRecyclerAdapter<Comment, CommentViewHolder>(Comment.class, R.layout.comment_body, CommentViewHolder.class, mComments) {
+        commentAdapter = new FirebaseRecyclerAdapter<Comment, CommentViewHolder>(Comment.class, R.layout.comment_body, CommentViewHolder.class, mComments.orderByChild("postID").equalTo(postID)) {
             @Override
             protected void populateViewHolder(final CommentViewHolder commentViewHolder, final Comment comment, int i) {
                 Log.w("COMMENT_ADAPTER", "called");
                 //populating views in card view
                 commentViewHolder.tvCommentContent.setText(comment.getCommentContent());
-                commentViewHolder.tvCommentTimestamp.setText(String.valueOf(comment.getTimestamp()));
+                commentViewHolder.tvCommentTimestamp.setText(getDate(comment.getTimestamp()));
                 commentViewHolder.tvCommentUser.setText(comment.getUserID());
 
                 //Query name of user who has posted
 
-                /*Query queryName = mRoot.child("users/" + post.getPostedBy() + "/fname");
+                Query queryName = mRoot.child("users/" + comment.getUserID() + "/fname");
                 queryName.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot != null)
-                            Log.w("POST::",dataSnapshot.getValue(String.class));
-                        postViewHolder.tvPostedBy.setText(dataSnapshot.getValue(String.class));
+                            Log.w("COMMENT::",dataSnapshot.getValue(String.class));
+                        commentViewHolder.tvCommentUser.setText(dataSnapshot.getValue(String.class));
 
                     }
 
@@ -92,7 +96,7 @@ public class CommentActivity extends AppCompatActivity {
                     public void onCancelled(FirebaseError firebaseError) {
 
                     }
-                });*/
+                });
 
             }
 
@@ -144,6 +148,8 @@ public class CommentActivity extends AppCompatActivity {
     private void setUpVariables() {
         rvComments = (RecyclerView) findViewById(R.id.rvComments);
         fabInputComment = (FloatingActionButton) findViewById(R.id.fabInputComment);
+        tvCommentPostTitle = (TextView)findViewById(R.id.tvCommentPostTitle);
+        tvCommentPostContent = (TextView)findViewById(R.id.tvCommentPostContent);
     }
 
     //Custom view holder

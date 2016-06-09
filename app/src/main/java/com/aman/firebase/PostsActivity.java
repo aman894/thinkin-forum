@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -169,6 +170,10 @@ public class PostsActivity extends AppCompatActivity {
             Intent startCommentActivity = new Intent(context,CommentActivity.class);
             Log.w("PostID::",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
             startCommentActivity.putExtra("postID",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
+            TextView title = (TextView)view.findViewById(R.id.tvTitle);
+            TextView content = (TextView)view.findViewById(R.id.tvContent);
+            startCommentActivity.putExtra("POST_TITLE",title.getText());
+            startCommentActivity.putExtra("POST_CONTENT",content.getText());
             context.startActivity(startCommentActivity);
         }
     }
