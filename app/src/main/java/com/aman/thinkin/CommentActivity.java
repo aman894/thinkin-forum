@@ -1,12 +1,8 @@
-package com.aman.firebase;
+package com.aman.thinkin;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.AuthData;
@@ -31,7 +26,6 @@ import com.firebase.ui.FirebaseRecyclerAdapter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 public class CommentActivity extends AppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";

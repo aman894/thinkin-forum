@@ -1,4 +1,4 @@
-package com.aman.firebase.planner;
+package com.aman.thinkin.planner;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,16 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
-import com.aman.firebase.R;
-import com.aman.firebase.planner.adapter.Planner_SLMAdapter;
-import com.aman.firebase.planner.planner_components.Planner_Reminder;
-import com.tonicartos.superslim.GridSLM;
+import com.aman.thinkin.R;
+import com.aman.thinkin.planner.adapter.Planner_SLMAdapter;
+import com.aman.thinkin.planner.planner_components.Planner_Reminder;
 import com.tonicartos.superslim.LayoutManager;
-import com.tonicartos.superslim.SectionLayoutManager;
-
-import java.util.Random;
 
 public class Planner_MainActivity extends AppCompatActivity {
     private RecyclerView plannner_RecyclerView;

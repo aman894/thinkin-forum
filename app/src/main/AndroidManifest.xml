@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aman.firebase">
+    package="com.aman.thinkin">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.aman.thinkin.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,30 +19,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="com.aman.thinkin.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.aman.thinkin.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".PostsActivity"
+            android:name="com.aman.thinkin.PostsActivity"
             android:label="@string/title_activity_posts"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".planner.Planner_MainActivity"
+            android:name="com.aman.thinkin.planner.Planner_MainActivity"
             android:label="@string/title_activity_planner__main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".planner.planner_components.Planner_Reminder"
+            android:name="com.aman.thinkin.planner.planner_components.Planner_Reminder"
             android:label="@string/title_activity_planner__reminder"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".planner.Planner_MainActivity" />
+                android:value="com.aman.thinkin.planner.Planner_MainActivity" />
         </activity>
-        <activity android:name=".CommentActivity"
+        <activity android:name="com.aman.thinkin.CommentActivity"
             android:label="Comments"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

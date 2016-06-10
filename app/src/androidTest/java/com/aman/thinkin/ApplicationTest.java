@@ -1,4 +1,4 @@
-package com.aman.firebase;
+package com.aman.thinkin;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

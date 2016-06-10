@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.aman.firebase.planner.planner_components.Planner_Reminder"
+    tools:context="com.aman.thinkin.planner.planner_components.Planner_Reminder"
     tools:showIn="@layout/activity_planner_reminder">
 
 </RelativeLayout>

@@ -9,7 +9,7 @@
     android:weightSum="10"
     android:background="#eeeeee"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.aman.firebase.PostsActivity"
+    tools:context="com.aman.thinkin.PostsActivity"
     tools:showIn="@layout/activity_posts">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

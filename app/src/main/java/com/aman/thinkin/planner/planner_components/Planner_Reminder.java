@@ -1,8 +1,7 @@
-package com.aman.firebase.planner.planner_components;
+package com.aman.thinkin.planner.planner_components;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.aman.firebase.R;
+import com.aman.thinkin.R;
 
 public class Planner_Reminder extends AppCompatActivity {
     String[] reminderCategory={"Select reminder","Call","Meet","Event"};

@@ -1,4 +1,4 @@
-package com.aman.firebase;
+package com.aman.thinkin;
 
 /**
  * Created by aman on 23/5/16.

@@ -1,13 +1,10 @@
-package com.aman.firebase;
+package com.aman.thinkin;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +32,6 @@ import com.firebase.ui.FirebaseRecyclerAdapter;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 public class PostsActivity extends AppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
@@ -176,16 +171,29 @@ public class PostsActivity extends AppCompatActivity {
                 case R.id.ibPostMenuButton:
                     PopupMenu popupMenu = new PopupMenu(context,ibPostMenuButton);
                     View menuParent = (View)view.getParent();
-                    Post post = PostsActivity.postAdapter.getItem(getAdapterPosition());
+                    final Post post = PostsActivity.postAdapter.getItem(getAdapterPosition());
                     if(post.getPostedBy().equals(authData.getUid())){
-                        popupMenu.getMenu().add("Delete");
-                        popupMenu.getMenu().add("Edit");
+                        popupMenu.getMenu().add(0,0,0,"Edit");
+                        popupMenu.getMenu().add(0,1,1,"Delete");
                     }
-                    popupMenu.getMenu().add("Report");
+                    else
+                        popupMenu.getMenu().add(0,2,2,"Report");
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            Toast.makeText(context,item.getTitle()+" clicked.",Toast.LENGTH_SHORT).show();
+                            switch (item.getItemId()){
+                                case 0:
+
+                                    break;
+                                case 1:
+                                    String postID = post.getPostID();
+                                    Toast.makeText(context,"delete",Toast.LENGTH_SHORT).show();
+                                    Firebase postRef = new Firebase(FIREBASE_URL).child("posts").child(postID);
+                                    postRef.setValue(null);
+                                    break;
+                                case 2:
+                                    break;
+                            }
                             return true;
                         }
                     });

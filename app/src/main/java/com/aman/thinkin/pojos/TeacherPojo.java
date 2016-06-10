@@ -1,4 +1,4 @@
-package com.aman.firebase.pojos;
+package com.aman.thinkin.pojos;
 
 /**
  * Created by 1305274 on 09-04-2016.

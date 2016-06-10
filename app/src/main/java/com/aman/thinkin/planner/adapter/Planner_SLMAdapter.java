@@ -1,4 +1,4 @@
-package com.aman.firebase.planner.adapter;
+package com.aman.thinkin.planner.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.aman.firebase.R;
-import com.aman.firebase.pojos.LineItem;
+import com.aman.thinkin.R;
+import com.aman.thinkin.pojos.LineItem;
 import com.tonicartos.superslim.GridSLM;
 
 import java.util.ArrayList;

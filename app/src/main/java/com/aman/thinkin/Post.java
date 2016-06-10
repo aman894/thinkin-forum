@@ -1,8 +1,4 @@
-package com.aman.firebase;
-
-import android.util.Log;
-
-import java.util.Date;
+package com.aman.thinkin;
 
 /**
  * Created by 1305266 on 01-04-2016.
