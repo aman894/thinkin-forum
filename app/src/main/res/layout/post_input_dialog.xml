@@ -7,20 +7,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Post"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:gravity="center"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:id="@+id/etInputPostTitle"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:hint="Title"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:id="@+id/etInputPostContent"
         android:hint="Content"/>
     <LinearLayout
@@ -32,7 +32,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:layout_weight="50"
             android:id="@+id/bPostAddCancel"
             android:text="Cancel"/>
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:id="@+id/bPostAddDone"
             android:text="Done"/>
     </LinearLayout>

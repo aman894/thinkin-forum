@@ -11,13 +11,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +43,7 @@ public class PostsActivity extends AppCompatActivity {
     Firebase mRoot, mPosts;
     RecyclerView rvPosts;
     static FirebaseRecyclerAdapter<Post, PostViewHolder> postAdapter;
-    AuthData authData;
+    static AuthData authData;
     Date timeStamp;
     static String postID;
     FloatingActionButton fabInputPost;
@@ -151,6 +154,7 @@ public class PostsActivity extends AppCompatActivity {
     //Custom view holder
     public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
+        ImageButton ibPostMenuButton;
         private Context context;
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -160,21 +164,46 @@ public class PostsActivity extends AppCompatActivity {
             tvPostedBy = (TextView) itemView.findViewById(R.id.tvPostedBy);
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
             tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+            ibPostMenuButton = (ImageButton)itemView.findViewById(R.id.ibPostMenuButton);
+            ibPostMenuButton.setOnClickListener(this);
             context = itemView.getContext();
 
         }
 
         @Override
         public void onClick(View view) {
-            Log.d("THINKIN", "onClick " + getAdapterPosition());
-            Intent startCommentActivity = new Intent(context,CommentActivity.class);
-            Log.w("PostID::",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
-            startCommentActivity.putExtra("postID",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
-            TextView title = (TextView)view.findViewById(R.id.tvTitle);
-            TextView content = (TextView)view.findViewById(R.id.tvContent);
-            startCommentActivity.putExtra("POST_TITLE",title.getText());
-            startCommentActivity.putExtra("POST_CONTENT",content.getText());
-            context.startActivity(startCommentActivity);
+            switch (view.getId()){
+                case R.id.ibPostMenuButton:
+                    PopupMenu popupMenu = new PopupMenu(context,ibPostMenuButton);
+                    View menuParent = (View)view.getParent();
+                    Post post = PostsActivity.postAdapter.getItem(getAdapterPosition());
+                    if(post.getPostedBy().equals(authData.getUid())){
+                        popupMenu.getMenu().add("Delete");
+                        popupMenu.getMenu().add("Edit");
+                    }
+                    popupMenu.getMenu().add("Report");
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Toast.makeText(context,item.getTitle()+" clicked.",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
+                    break;
+                default:
+
+                    Log.d("THINKIN", "onClick " + getAdapterPosition());
+                    Intent startCommentActivity = new Intent(context,CommentActivity.class);
+                    Log.w("PostID::",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
+                    startCommentActivity.putExtra("postID",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
+                    TextView title = (TextView)view.findViewById(R.id.tvTitle);
+                    TextView content = (TextView)view.findViewById(R.id.tvContent);
+                    startCommentActivity.putExtra("POST_TITLE",title.getText());
+                    startCommentActivity.putExtra("POST_CONTENT",content.getText());
+                    context.startActivity(startCommentActivity);
+            }
         }
+
     }
 }

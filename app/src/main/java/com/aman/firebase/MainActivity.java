@@ -33,6 +33,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpVariables();
         mRootRef = new Firebase("https://think-in.firebaseio.com/");
         bLogin.setOnClickListener(this);
+        /*----------remove this--------------*/
+        mRootRef.authWithPassword("aman@gmail.com", "aman", new Firebase.AuthResultHandler() {
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                Log.v("E_LOGIN", "Logged in");
+                //progressDialog.dismiss();
+                Log.w("F_PROVIDER",authData.getProvider());
+                Toast.makeText(MainActivity.this, "Logged in !!", Toast.LENGTH_SHORT).show();
+                Intent openHomeActivity = new Intent(MainActivity.this,HomeActivity.class);
+                startActivity(openHomeActivity);
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                //progressDialog.dismiss();
+                Log.v("E_LOGIN", "Logged in failed with code " + firebaseError.getCode());
+                Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*----------------------------------------------*/
 
         /*
         final MaterialLoginView login = (MaterialLoginView) findViewById(R.id.login);
