@@ -25,13 +25,15 @@ import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.firebase.ui.FirebaseRecyclerAdapter;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class PostsActivity extends AppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
@@ -96,7 +98,7 @@ public class PostsActivity extends AppCompatActivity {
                 });
 
             }
-
+            //get contextual time
             private String getDate(long timeStamp) {
                 long timestamp = -timeStamp;
                 Date date = new Date();
@@ -150,7 +152,8 @@ public class PostsActivity extends AppCompatActivity {
                         Firebase pushToken = mPosts.push();
                         postID = pushToken.getKey();
                         Log.w("PostID::",postID);
-                        Post post = new Post(postID,etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0);
+                        String [] upvoteList = {""};
+                        Post post = new Post(postID,etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0,upvoteList);
                         pushToken.setValue(post);
                         alertDialog.dismiss();
                     }
@@ -176,6 +179,7 @@ public class PostsActivity extends AppCompatActivity {
     public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
         ImageButton ibPostMenuButton;
+        Button bUpvote;
         private Context context;
         public PostViewHolder(View itemView) {
             super(itemView);
@@ -185,8 +189,10 @@ public class PostsActivity extends AppCompatActivity {
             tvPostedBy = (TextView) itemView.findViewById(R.id.tvPostedBy);
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
             tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+            bUpvote = (Button) itemView.findViewById(R.id.bUpvote);
             ibPostMenuButton = (ImageButton)itemView.findViewById(R.id.ibPostMenuButton);
             ibPostMenuButton.setOnClickListener(this);
+            bUpvote.setOnClickListener(this);
             context = itemView.getContext();
 
         }
@@ -194,6 +200,20 @@ public class PostsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
+                case R.id.bUpvote:
+                    Post postForUpvote = PostsActivity.postAdapter.getItem(getAdapterPosition());
+                    Firebase upvoteListRef = new Firebase(FIREBASE_URL+"/posts/"+postForUpvote.getPostID()+"/upvoteList");
+                    ArrayList<String> upvoteList = new ArrayList<String>(Arrays.asList(postForUpvote.getUpvoteList()));
+                    Log.w("List item",upvoteList.toString());
+                    if(!upvoteList.contains(authData.getUid())){
+                        upvoteList.add(authData.getUid());
+                        upvoteListRef.setValue(upvoteList.toArray());
+                        Firebase upvotePostRef = new Firebase(FIREBASE_URL+"/posts/"+postForUpvote.getPostID()+"/upvotes");
+                        upvotePostRef.setValue(postForUpvote.getUpvotes()+1);
+                    }
+                    else Toast.makeText(context,"Already Upvoted",Toast.LENGTH_SHORT).show();
+
+                    break;
                 case R.id.ibPostMenuButton:
                     PopupMenu popupMenu = new PopupMenu(context,ibPostMenuButton);
                     View menuParent = (View)view.getParent();
@@ -209,11 +229,11 @@ public class PostsActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()){
                                 case 0:
-
+                                    Toast.makeText(context,"Edit coming soon!",Toast.LENGTH_SHORT).show();
                                     break;
                                 case 1:
                                     String postID = post.getPostID();
-                                    Toast.makeText(context,"delete",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context,"Deleted",Toast.LENGTH_SHORT).show();
                                     Firebase postRef = new Firebase(FIREBASE_URL).child("posts").child(postID);
                                     postRef.setValue(null);
                                     break;
@@ -226,7 +246,6 @@ public class PostsActivity extends AppCompatActivity {
                     popupMenu.show();
                     break;
                 default:
-
                     Log.d("THINKIN", "onClick " + getAdapterPosition());
                     Intent startCommentActivity = new Intent(context,CommentActivity.class);
                     Log.w("PostID::",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());

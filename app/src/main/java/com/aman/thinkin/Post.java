@@ -1,5 +1,8 @@
 package com.aman.thinkin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 1305266 on 01-04-2016.
  *
@@ -12,16 +15,22 @@ public class Post {
     private String postedBy;
     private long timeStamp;
     private int upvotes;
+    private String[] upvoteList;
 
     public Post(){}
 
-    public Post(String postID,String title,String content,String postedBy,long timeStamp,int upvotes){
+    public String[] getUpvoteList() {
+        return upvoteList;
+    }
+
+    public Post(String postID, String title, String content, String postedBy, long timeStamp, int upvotes, String[]upvoteList){
         this.postID = postID;
         this.title = title;
         this.content = content;
         this.timeStamp = timeStamp;
         this.upvotes = upvotes;
         this.postedBy = postedBy;
+        this.upvoteList = upvoteList;
     }
 
     public String getPostID() {
