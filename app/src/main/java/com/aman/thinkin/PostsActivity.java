@@ -98,9 +98,35 @@ public class PostsActivity extends AppCompatActivity {
             }
 
             private String getDate(long timeStamp) {
-                Date date = new Date(-timeStamp);
-                Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                return format.format(date);
+                long timestamp = -timeStamp;
+                Date date = new Date();
+                long difference = Math.abs(timestamp-date.getTime())/1000;
+
+                if(difference<60){
+                    String time = String.valueOf(difference);
+                    if(time.equals("1"))
+                        return time+" sec ago";
+                    else return time+" secs ago";
+
+                }
+                else if(difference>=60 && difference<3600){
+                    String time = String.valueOf(difference/60);
+                    if(time.equals("1"))
+                        return time+" min ago";
+                    else return time+" mins ago";
+                }
+                else if(difference>=3600 && difference<3600*24){
+                    String time = String.valueOf(difference/3600);
+                    if(time.equals("1"))
+                        return time+" hr ago";
+                    else return time+" hrs ago";
+                }
+                else {
+                    String time = String.valueOf(difference/(3600*24));
+                    if(time.equals("1"))
+                        return time+" day ago";
+                    else return time+" days ago";
+                }
             }
         };
         rvPosts.setAdapter(postAdapter);
