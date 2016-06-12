@@ -6,7 +6,7 @@ package com.aman.thinkin.pojos;
 public class TeacherPojo {
     String name;
     String cabinNo;
-    int mobileNo;
+    String mobileNo;
     int teacherPhoto;
 
     public void setTeacherName(String name){
@@ -23,10 +23,10 @@ public class TeacherPojo {
         return cabinNo;
     }
 
-    public void setMobileNo(int mobileNo){
+    public void setMobileNo(String mobileNo){
         this.mobileNo=mobileNo;
     }
-    public int getMobileNo(){
+    public String getMobileNo(){
         return mobileNo;
     }
 
