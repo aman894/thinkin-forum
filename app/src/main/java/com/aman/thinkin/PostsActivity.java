@@ -252,8 +252,10 @@ public class PostsActivity extends AppCompatActivity {
                     startCommentActivity.putExtra("postID",PostsActivity.postAdapter.getRef(getAdapterPosition()).getKey());
                     TextView title = (TextView)view.findViewById(R.id.tvTitle);
                     TextView content = (TextView)view.findViewById(R.id.tvContent);
+                    TextView postedBy = (TextView)view.findViewById(R.id.tvPostedBy);
                     startCommentActivity.putExtra("POST_TITLE",title.getText());
                     startCommentActivity.putExtra("POST_CONTENT",content.getText());
+                    startCommentActivity.putExtra("POSTED_BY",postedBy.getText());
                     context.startActivity(startCommentActivity);
             }
         }

@@ -36,8 +36,8 @@ public class CommentActivity extends AppCompatActivity {
     Date timeStamp;
     FloatingActionButton fabInputComment;
     int value=0;
-    TextView tvCommentPostTitle,tvCommentPostContent;
-    String postID,postTitle,postContent;
+    TextView tvCommentPostTitle,tvCommentPostContent,tvPostedByInComment;
+    String postID,postTitle,postContent,postedBy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +50,11 @@ public class CommentActivity extends AppCompatActivity {
         postID = intent.getStringExtra("postID");
         postTitle = intent.getStringExtra("POST_TITLE");
         postContent = intent.getStringExtra("POST_CONTENT");
+        postedBy = intent.getStringExtra("POSTED_BY");
 
         tvCommentPostTitle.setText(postTitle);
         tvCommentPostContent.setText(postContent);
+        tvPostedByInComment.setText(postedBy);
         Log.w("postID",postID);
         //Firebase context has to be set before any firebase reference is made
         Firebase.setAndroidContext(this);
@@ -95,9 +97,35 @@ public class CommentActivity extends AppCompatActivity {
             }
 
             private String getDate(long timeStamp) {
-                Date date = new Date(-timeStamp);
-                Format format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                return format.format(date);
+                long timestamp = -timeStamp;
+                Date date = new Date();
+                long difference = Math.abs(timestamp-date.getTime())/1000;
+
+                if(difference<60){
+                    String time = String.valueOf(difference);
+                    if(time.equals("1"))
+                        return time+" sec ago";
+                    else return time+" secs ago";
+
+                }
+                else if(difference>=60 && difference<3600){
+                    String time = String.valueOf(difference/60);
+                    if(time.equals("1"))
+                        return time+" min ago";
+                    else return time+" mins ago";
+                }
+                else if(difference>=3600 && difference<3600*24){
+                    String time = String.valueOf(difference/3600);
+                    if(time.equals("1"))
+                        return time+" hr ago";
+                    else return time+" hrs ago";
+                }
+                else {
+                    String time = String.valueOf(difference/(3600*24));
+                    if(time.equals("1"))
+                        return time+" day ago";
+                    else return time+" days ago";
+                }
             }
         };
         rvComments.setAdapter(commentAdapter);
@@ -144,6 +172,7 @@ public class CommentActivity extends AppCompatActivity {
         fabInputComment = (FloatingActionButton) findViewById(R.id.fabInputComment);
         tvCommentPostTitle = (TextView)findViewById(R.id.tvCommentPostTitle);
         tvCommentPostContent = (TextView)findViewById(R.id.tvCommentPostContent);
+        tvPostedByInComment = (TextView)findViewById(R.id.tvPostedByInComment);
     }
 
     //Custom view holder
