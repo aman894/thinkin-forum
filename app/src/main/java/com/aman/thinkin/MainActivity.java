@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction.replace(R.id.flMainContainer,signupFragment);
                 fragmentTransaction.commit();
                 bToSignup.setVisibility(View.INVISIBLE);
+                //
                 break;
 
         }
