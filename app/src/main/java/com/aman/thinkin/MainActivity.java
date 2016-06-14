@@ -26,61 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.add(R.id.flMainContainer,loginFragment);
         fragmentTransaction.commit();
-
-        /*Firebase.setAndroidContext(this);
-        setUpVariables();
-        mRootRef = new Firebase("https://think-in.firebaseio.com/");
-        bLogin.setOnClickListener(this);
-        /*----------remove this--------------*/
-        /*mRootRef.authWithPassword("aman@gmail.com", "aman", new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData authData) {
-                Log.v("E_LOGIN", "Logged in");
-                //progressDialog.dismiss();
-                Log.w("F_PROVIDER",authData.getProvider());
-                Toast.makeText(MainActivity.this, "Logged in !!", Toast.LENGTH_SHORT).show();
-                Intent openHomeActivity = new Intent(MainActivity.this,HomeActivity.class);
-                startActivity(openHomeActivity);
-            }
-
-            @Override
-            public void onAuthenticationError(FirebaseError firebaseError) {
-                //progressDialog.dismiss();
-                Log.v("E_LOGIN", "Logged in failed with code " + firebaseError.getCode());
-                Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-        /*----------------------------------------------*/
-
-        /*
-        final MaterialLoginView login = (MaterialLoginView) findViewById(R.id.login);
-        login.setListener(new MaterialLoginViewListener() {
-            @Override
-            public void onRegister(TextInputLayout registerUser, TextInputLayout registerPass, TextInputLayout registerPassRep) {
-                //Handle register
-                final CharSequence userID=registerUser.getEditText().getText().toString();
-                mRootRef.createUser(registerUser.getEditText().getText().toString(), registerPass.getEditText().getText().toString(),
-                        new Firebase.ResultHandler() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(MainActivity.this, "Registered", Toast.LENGTH_SHORT).show();
-                        Firebase userRef = mRootRef.child("users");
-                    }
-
-                    @Override
-                    public void onError(FirebaseError firebaseError) {
-                        Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-
-            }
-        });
-        */
-
-        /*Log.v("Value of root", mRootRef.toString());*/
-
     }
 
     @Override
