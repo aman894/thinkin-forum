@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingRight="60dp"
+    android:paddingLeft="60dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:background="#fff"
+    android:weightSum="100">
+    <ImageView
+        android:layout_weight="70"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_height="match_parent"
+        />
+    <LinearLayout
+        android:layout_weight="30"
+        android:id="@+id/login"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Email"/>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/etLoginEmail"
+            android:layout_width="match_parent"
+            android:inputType="textEmailAddress"
+            android:layout_height="wrap_content">
+
+        </EditText>
+        <TextView
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Password"/>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/etLoginPassword"
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="wrap_content">
+
+        </EditText>
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/bLogin"
+            android:text="Log In"/>
+    </LinearLayout>
+</LinearLayout>
