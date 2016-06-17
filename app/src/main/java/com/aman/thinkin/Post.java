@@ -16,6 +16,7 @@ public class Post {
     private long timeStamp;
     private int upvotes;
     private String[] upvoteList;
+    private String[] tagList;
 
     public Post(){}
 
@@ -23,7 +24,8 @@ public class Post {
         return upvoteList;
     }
 
-    public Post(String postID, String title, String content, String postedBy, long timeStamp, int upvotes, String[]upvoteList){
+
+    public Post(String postID, String title, String content, String postedBy, long timeStamp, int upvotes, String[]upvoteList, String [] tagList){
         this.postID = postID;
         this.title = title;
         this.content = content;
@@ -31,6 +33,7 @@ public class Post {
         this.upvotes = upvotes;
         this.postedBy = postedBy;
         this.upvoteList = upvoteList;
+        this.tagList = tagList;
     }
 
     public String getPostID() {
@@ -59,5 +62,9 @@ public class Post {
 
     public long getTimeStamp() {
         return timeStamp;
+    }
+
+    public String[] getTagList() {
+        return tagList;
     }
 }

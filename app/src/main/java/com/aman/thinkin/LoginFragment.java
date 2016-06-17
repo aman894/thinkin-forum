@@ -71,7 +71,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         progressDialog.dismiss();
                         Log.w("F_PROVIDER",authData.getProvider());
                         Toast.makeText(getActivity(), "Logged in !!", Toast.LENGTH_SHORT).show();
-                        Intent openHomeActivity = new Intent(getActivity(),HomeActivity.class);
+                        Intent openHomeActivity = new Intent(getActivity(),PostsActivity.class);
                         startActivity(openHomeActivity);
                     }
 

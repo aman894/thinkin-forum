@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -11,8 +13,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="3dp"
         card_view:cardCornerRadius="4dp"
-        card_view:cardUseCompatPadding="true"
-        >
+        card_view:cardUseCompatPadding="true">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,7 +53,7 @@
                         android:layout_centerVertical="true"
                         android:layout_height="36dp"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:src="@android:drawable/ic_menu_more"
+                        android:src="@drawable/ic_action_expand"
                         android:background="#fff"
                         android:layout_weight="15"
                         android:id="@+id/ibPostMenuButton"/>
@@ -75,35 +76,48 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="#eeeeee"/>
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginTop="5dp">
-                    <Button
-                        android:layout_width="60dp"
-                        android:layout_height="wrap_content"
-                        android:minHeight="0dp"
-                        android:padding="4dp"
-                        android:textColor="#fff"
-                        android:background="#448AFF"
-                        android:text="Upvote"
-                        android:textSize="12sp"
-                        android:id="@+id/bUpvote"
-                        />
-                    <TextView
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="0dp"
+                            android:padding="4dp"
+                            android:textColor="#fff"
+                            android:background="#448AFF"
+                            android:text="Upvote"
+                            android:textSize="12sp"
+                            android:id="@+id/bUpvote"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tvUpvotes"
+                            android:textColor="#448AFF"
+                            android:background="@drawable/upvote_style"
+                            android:textSize="12sp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:paddingLeft="6dp"
+                            android:paddingRight="6dp"
+                            android:layout_toRightOf="@id/bUpvote"/>
+                    </RelativeLayout>
+                    <me.gujun.android.taggroup.TagGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
-                        android:id="@+id/tvUpvotes"
-                        android:textColor="#448AFF"
-                        android:background="@drawable/upvote_style"
-                        android:textSize="12sp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        android:layout_toRightOf="@id/bUpvote"/>
-                </RelativeLayout>
+                        android:id="@+id/tgDisplayPostTags"
+                        android:layout_marginLeft="5dp"
+                        card_view:atg_borderColor="#448AFF"
+                        card_view:atg_textColor="#448AFF">
+                    </me.gujun.android.taggroup.TagGroup>
+                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
     </android.support.v7.widget.CardView>

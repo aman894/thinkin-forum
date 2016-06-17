@@ -35,6 +35,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import me.gujun.android.taggroup.TagGroup;
+
 public class PostsActivity extends AppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
     Firebase mRoot, mPosts;
@@ -55,7 +57,6 @@ public class PostsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setUpVariables();
-
         //Firebase context has to be set before any firebase reference is made
         Firebase.setAndroidContext(this);
         mRoot = new Firebase(FIREBASE_URL);
@@ -78,6 +79,7 @@ public class PostsActivity extends AppCompatActivity {
                 postViewHolder.tvContent.setText(post.getContent());
                 postViewHolder.tvUpvotes.setText(String.valueOf(post.getUpvotes()));
                 postViewHolder.tvPostTime.setText(getDate(post.getTimeStamp()));
+                postViewHolder.tgDisplayTags.setTags(post.getTagList());
 
                 //Query name of user who has posted
 
@@ -142,6 +144,7 @@ public class PostsActivity extends AppCompatActivity {
                 alertDialog.setView(dialogView);
                 final EditText etInputPostTitle = (EditText)dialogView.findViewById(R.id.etInputPostTitle);
                 final EditText etInputPostContent = (EditText)dialogView.findViewById(R.id.etInputPostContent);
+                final TagGroup mTagGroup = (TagGroup)dialogView.findViewById(R.id.tgInputTags);
                 Button bPostAddDone = (Button)dialogView.findViewById(R.id.bPostAddDone);
                 Button bPostAddCancel = (Button) dialogView.findViewById(R.id.bPostAddCancel);
                 bPostAddDone.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +156,7 @@ public class PostsActivity extends AppCompatActivity {
                         postID = pushToken.getKey();
                         Log.w("PostID::",postID);
                         String [] upvoteList = {""};
-                        Post post = new Post(postID,etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0,upvoteList);
+                        Post post = new Post(postID,etInputPostTitle.getText().toString(), etInputPostContent.getText().toString(), authData.getUid(), -timeStampMills, 0,upvoteList,mTagGroup.getTags());
                         pushToken.setValue(post);
                         alertDialog.dismiss();
                     }
@@ -178,7 +181,9 @@ public class PostsActivity extends AppCompatActivity {
     //Custom view holder
     public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
+
         ImageButton ibPostMenuButton;
+        TagGroup tgDisplayTags;
         Button bUpvote;
         private Context context;
         public PostViewHolder(View itemView) {
@@ -189,6 +194,7 @@ public class PostsActivity extends AppCompatActivity {
             tvPostedBy = (TextView) itemView.findViewById(R.id.tvPostedBy);
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
             tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
+            tgDisplayTags = (TagGroup) itemView.findViewById(R.id.tgDisplayPostTags);
             bUpvote = (Button) itemView.findViewById(R.id.bUpvote);
             ibPostMenuButton = (ImageButton)itemView.findViewById(R.id.ibPostMenuButton);
             ibPostMenuButton.setOnClickListener(this);

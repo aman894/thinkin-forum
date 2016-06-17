@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.aman.firebase"
+        applicationId "com.aman.thinkin"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -33,4 +33,5 @@ dependencies {
     compile 'com.tonicartos:superslim:0.4.13'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
 }
