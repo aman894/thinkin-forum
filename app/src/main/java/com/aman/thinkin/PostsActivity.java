@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,10 +36,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.jar.*;
 
 import me.gujun.android.taggroup.TagGroup;
 
-public class PostsActivity extends AppCompatActivity {
+public class PostsActivity extends BaseAppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
     Firebase mRoot, mPosts;
     RecyclerView rvPosts;
@@ -79,11 +82,13 @@ public class PostsActivity extends AppCompatActivity {
                 postViewHolder.tvContent.setText(post.getContent());
                 postViewHolder.tvUpvotes.setText(String.valueOf(post.getUpvotes()));
                 postViewHolder.tvPostTime.setText(getDate(post.getTimeStamp()));
-                postViewHolder.tgDisplayTags.setTags(post.getTagList());
+                if(post.getTagList()!=null)
+                    postViewHolder.tgDisplayTags.setTags(post.getTagList());
 
                 //Query name of user who has posted
 
                Query queryName = mRoot.child("users/" + post.getPostedBy() + "/fname");
+                Log.w("POSTED_BY: ",post.getPostedBy());
                 queryName.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -133,6 +138,8 @@ public class PostsActivity extends AppCompatActivity {
                 }
             }
         };
+        postAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        });
         rvPosts.setAdapter(postAdapter);
         fabInputPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +179,28 @@ public class PostsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_post_activity,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.post_logout:
+                mRoot.unauth();
+                if(mRoot.getAuth() == null){
+                    Intent goBackToLogin = new Intent(PostsActivity.this, MainActivity.class);
+                    startActivity(goBackToLogin);
+                }
+                else Log.w("AUTH_DATA::",mRoot.getAuth().toString());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     //Initializing variables
     private void setUpVariables() {
         rvPosts = (RecyclerView) findViewById(R.id.rvPosts);
@@ -179,7 +208,7 @@ public class PostsActivity extends AppCompatActivity {
     }
 
     //Custom view holder
-    public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,TagGroup.OnTagClickListener{
         TextView tvTitle, tvContent, tvPostedBy, tvUpvotes,tvPostTime;
 
         ImageButton ibPostMenuButton;
@@ -195,6 +224,7 @@ public class PostsActivity extends AppCompatActivity {
             tvUpvotes = (TextView) itemView.findViewById(R.id.tvUpvotes);
             tvPostTime = (TextView) itemView.findViewById(R.id.tvPostTime);
             tgDisplayTags = (TagGroup) itemView.findViewById(R.id.tgDisplayPostTags);
+            tgDisplayTags.setOnTagClickListener(this);
             bUpvote = (Button) itemView.findViewById(R.id.bUpvote);
             ibPostMenuButton = (ImageButton)itemView.findViewById(R.id.ibPostMenuButton);
             ibPostMenuButton.setOnClickListener(this);
@@ -266,5 +296,12 @@ public class PostsActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        public void onTagClick(String tag) {
+            //Toast.makeText(context,tag+" clicked",Toast.LENGTH_SHORT).show();
+            Intent openTagActivity = new Intent(context,TagActivity.class);
+            openTagActivity.putExtra("TAG_VALUE",tag);
+            context.startActivity(openTagActivity);
+        }
     }
 }

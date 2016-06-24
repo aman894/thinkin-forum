@@ -16,6 +16,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="#eeeeee"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,8 +32,13 @@
         android:id="@+id/etInputPostContent"
         android:hint="Content"/>
     <me.gujun.android.taggroup.TagGroup
-        android:id="@+id/tgInputTags"
+        android:layout_height="wrap_content"
         style="@style/TagGroup"
+        android:id="@+id/tgInputTags"
+        app:atg_textColor="#448AFF"
+        app:atg_inputTextColor="#448AFF"
+        app:atg_borderColor="#448AFF"
+        app:atg_dashBorderColor="#448AFF"
         app:atg_isAppendMode="true" />
     <LinearLayout
         android:layout_width="match_parent"

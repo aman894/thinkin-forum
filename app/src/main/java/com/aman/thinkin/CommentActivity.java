@@ -27,7 +27,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CommentActivity extends AppCompatActivity {
+public class CommentActivity extends BaseAppCompatActivity {
     private static String FIREBASE_URL = "https://think-in.firebaseio.com/";
     Firebase mRoot, mComments;
     RecyclerView rvComments;

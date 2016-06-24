@@ -18,7 +18,7 @@ import com.firebase.client.FirebaseError;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity{
+public class HomeActivity extends BaseAppCompatActivity{
     EditText etFName,etLName,etBranch,etSection,etYear;
     Button bProfileSubmit,bSkipProfile,bGoToPost;
     @Override

@@ -59,6 +59,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener{
                     public void onError(FirebaseError firebaseError) {
                         Toast.makeText(getActivity(), "Registration failed", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
+
                     }
                 });
                 break;

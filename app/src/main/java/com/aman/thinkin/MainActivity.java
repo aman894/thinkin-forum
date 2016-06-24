@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.firebase.client.Firebase;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends BaseAppCompatActivity implements View.OnClickListener{
     Button bToSignup;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;

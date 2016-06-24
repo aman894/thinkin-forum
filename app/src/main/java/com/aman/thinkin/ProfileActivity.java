@@ -12,7 +12,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseAppCompatActivity {
     TextView tvDisplayFName,tvDisplayLName,tvDisplayBranch,tvDisplaySection,tvDisplayYear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
